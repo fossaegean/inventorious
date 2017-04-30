@@ -33,6 +33,7 @@ group :development do
 
   # Developer happiness
   gem 'rubocop-rails', require: false
+  gem 'reek', require: false
 end
 
 group :production do

@@ -7,17 +7,9 @@ class Order < ApplicationRecord
   validates :item_id, presence: true
   validates :member_id, presence: true
 
-  def self.active?
-    Order.where(status: true)
-  end
-
-  def self.inactive?
-    Order.where(status: false)
-  end
-
-  def self.expired?
-    Order.where('expire_at < ?', Date.today).where(status: true)
-  end
+  scope :active, -> { where(status: true) }
+  scope :inactive, -> { where(status: false) }
+  scope :expired, -> { where('expire_at < ?', Date.today) }
 
   def self.renew(id)
     @order = Order.where(id: id)

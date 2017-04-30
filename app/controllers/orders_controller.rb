@@ -5,12 +5,12 @@ class OrdersController < ApplicationController
     @orders  = Order.all
     @members = Member.all
     @items   = Item.all
-    @active  = Order.active?
-    @expired = Order.expired?
+    @active  = Order.active.all
+    @expired = Order.expired.all
   end
 
   def old
-    @inactive = Order.inactive?
+    @inactive = Order.inactive.all
   end
 
   def renew

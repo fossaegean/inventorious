@@ -13,23 +13,23 @@
 
 
       <div class="form-group has-feedback">
-        <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "New password" %>
+        <%= f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: 'New password' %>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "Type new password again" %>
+        <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control', placeholder: 'Type new password again' %>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
 
         <div class="col-xs-8">
           <div class="checkbox icheck">
-            <%= link_to "Back to login", user_session_path %>
+            <%= link_to 'Back to login', user_session_path %>
           </div>
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-            <%= f.submit "Submit", class: "btn btn-primary btn-block btn-flat" %>
+            <%= f.submit 'Submit', class: 'btn btn-primary btn-block btn-flat' %>
         </div>
         <% end %>
         <!-- /.col -->

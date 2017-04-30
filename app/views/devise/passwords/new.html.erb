@@ -11,7 +11,7 @@
       <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= devise_error_messages! %>
       <div class="form-group has-feedback">
-        <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "email" %>
+        <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'email' %>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
 
@@ -19,13 +19,13 @@
 
         <div class="col-xs-8">
           <div class="checkbox icheck">
-            <%= link_to "Back to login", user_session_path %>
+            <%= link_to 'Back to login', user_session_path %>
           </div>
         </div>
 
         <!-- /.col -->
         <div class="col-xs-4">
-          <%= f.submit "Reset", class: "btn btn-primary btn-block btn-flat" %>
+          <%= f.submit 'Reset', class: 'btn btn-primary btn-block btn-flat' %>
         </div>
         <% end %>
         <!-- /.col -->

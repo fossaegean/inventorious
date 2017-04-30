@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
   end
 
   def old
-    render locals: { inactive: Order.inactive.all }
+    @inactive = Order.inactive.all
   end
 
   def renew
@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(order_params.reverse_merge({ status: true }))
+    @order = Order.new(order_params.reverse_merge(status: true))
 
     if @order.item.remaining_quantity >= order.quantity
       if @order.save && order.item.decrement!(:remaining_quantity, @order.quantity)

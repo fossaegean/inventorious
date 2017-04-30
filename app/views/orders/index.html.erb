@@ -27,7 +27,7 @@
             <!-- small box -->
             <div class="small-box bg-aqua">
               <div class="inner">
-                <h3><%= @items.sum(:quantity) %></h3>
+                <h3><%= items.sum(:quantity) %></h3>
                 <p>Items Tracked</p>
               </div>
               <div class="icon">
@@ -40,7 +40,7 @@
             <!-- small box -->
             <div class="small-box bg-green">
               <div class="inner">
-                <h3><%= @items.sum(:remaining_quantity) %></h3>
+                <h3><%= items.sum(:remaining_quantity) %></h3>
                 <p>Items Available</p>
               </div>
               <div class="icon">
@@ -53,7 +53,7 @@
             <!-- small box -->
             <div class="small-box bg-red">
               <div class="inner">
-                <h3><%= (@items.sum(:quantity) - @items.sum(:remaining_quantity)) %></h3>
+                <h3><%= (items.sum(:quantity) - items.sum(:remaining_quantity)) %></h3>
                 <p>Items Unavailable</p>
               </div>
               <div class="icon">
@@ -66,7 +66,7 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
               <div class="inner">
-                <h3><%= @expired.count %></h3>
+                <h3><%= expired.count %></h3>
                 <p>Expired Orders</p>
               </div>
               <div class="icon">
@@ -82,7 +82,7 @@
           <div class="col-md-6">
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">Orders (<%= @active.count %>)</h3>
+                <h3 class="box-title">Orders (<%= active.count %>)</h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -105,7 +105,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% @active.each do |order| %>
+                    <% active.each do |order| %>
                       <tr>
                         <td>
                           <%= order.item.name %>
@@ -147,7 +147,7 @@
           <div class="col-md-6">
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">Members (<%= @members.count %>)</h3>
+                <h3 class="box-title">Members (<%= members.count %>)</h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -163,7 +163,7 @@
                       <i class="ion ion-trash-b"></i>
                     </th>
                   </tr>
-                  <% @members.each do |member| %>
+                  <% members.each do |member| %>
                     <tr>
                       <td><%= member.name %></td>
                       <td><%= member.email %></td>

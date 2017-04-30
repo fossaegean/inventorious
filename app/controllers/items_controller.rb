@@ -35,7 +35,10 @@ class ItemsController < ApplicationController
     redirect_to items_url, notice: 'Item was successfully destroyed.'
   end
 
+  #######
   private
+  #######
+
   def set_item
     @item = Item.find(params[:id])
   end

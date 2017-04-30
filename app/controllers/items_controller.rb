@@ -13,8 +13,9 @@ class ItemsController < ApplicationController
   end
 
   def create
-    params[:item][:remaining_quantity] = params[:item][:quantity]
     @item = Item.new(item_params)
+    @item.remaining_quantity = @item.quantity
+
     if @item.save
       redirect_to :root, notice: 'Item was successfully created.'
     else

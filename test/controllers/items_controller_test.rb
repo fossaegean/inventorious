@@ -5,17 +5,17 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     @item = items(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get items_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_item_url
     assert_response :success
   end
 
-  test "should create item" do
+  test 'should create item' do
     assert_difference('Item.count') do
       post items_url, params: { item: { category: @item.category, description: @item.description, name: @item.name, quantity: @item.quantity } }
     end
@@ -23,22 +23,22 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to item_url(Item.last)
   end
 
-  test "should show item" do
+  test 'should show item' do
     get item_url(@item)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_item_url(@item)
     assert_response :success
   end
 
-  test "should update item" do
+  test 'should update item' do
     patch item_url(@item), params: { item: { category: @item.category, description: @item.description, name: @item.name, quantity: @item.quantity } }
     assert_redirected_to item_url(@item)
   end
 
-  test "should destroy item" do
+  test 'should destroy item' do
     assert_difference('Item.count', -1) do
       delete item_url(@item)
     end

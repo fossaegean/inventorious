@@ -1,0 +1,15 @@
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'bin/*'
+  TargetRubyVersion: 2.3
+
+inherit_gem:
+  rubocop-rails:
+    - config/rails.yml
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/IndentationConsistency:
+  EnforcedStyle: normal

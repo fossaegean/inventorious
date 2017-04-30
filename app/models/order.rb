@@ -16,15 +16,15 @@ class Order < ApplicationRecord
   end
 
   def self.expired?
-    Order.where("expire_at < ?", Date.today).where(status: true)
+    Order.where('expire_at < ?', Date.today).where(status: true)
   end
 
-  def self.renew id
+  def self.renew(id)
     @order = Order.where(id: id)
     @order.update(expire_at: 7.days.from_now)
   end
 
-  def self.disable id
+  def self.disable(id)
     @order = Order.where(id: id)
     @order.update(status: false)
   end

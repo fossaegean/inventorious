@@ -1,10 +1,6 @@
 class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @members = Member.all
-  end
-
   def new
     @member = Member.new
   end

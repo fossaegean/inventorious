@@ -35,10 +35,11 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(order_params.reverse_merge(status: true))
+    @order        = Order.new(order_params)
+    @order.status ||= true
 
-    if @order.item.remaining_quantity >= order.quantity
-      if @order.save && order.item.decrement!(:remaining_quantity, @order.quantity)
+    if @order.item.remaining_quantity >= @order.quantity
+      if @order.save && @order.item.decrement!(:remaining_quantity, @order.quantity)
         redirect_to :root, notice: 'Order was successfully created.'
 
         send_notification_email_for_action(:create)
@@ -76,6 +77,10 @@ class OrdersController < ApplicationController
   end
 
   def send_notification_email_for_action(action)
-    OrderMailer.delay.send(:"#{action}_order", order_mailer_params.merge(action: action)).deliver rescue nil
+    OrderMailer.delay.send_notification(
+        mail_locals: { order: @order, user: current_user },
+        action:      action,
+        subject:     notification_for_action(action: action, who_did_this: current_user.name)
+    ).deliver rescue nil
   end
 end

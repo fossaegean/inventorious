@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class OrdersControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    sign_in users(:one)
     @order = orders(:one)
   end
 
@@ -17,25 +20,10 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create order' do
     assert_difference('Order.count') do
-      post orders_url, params: { order: { expire_at: @order.expire_at, quantity: @order.quantity, references: @order.references } }
+      post orders_url, params: { order: { expire_at: @order.expire_at, quantity: @order.quantity, item_id: Item.first.id, member_id: Member.first.id } }
     end
 
-    assert_redirected_to order_url(Order.last)
-  end
-
-  test 'should show order' do
-    get order_url(@order)
-    assert_response :success
-  end
-
-  test 'should get edit' do
-    get edit_order_url(@order)
-    assert_response :success
-  end
-
-  test 'should update order' do
-    patch order_url(@order), params: { order: { expire_at: @order.expire_at, quantity: @order.quantity, references: @order.references } }
-    assert_redirected_to order_url(@order)
+    assert_redirected_to root_url
   end
 
   test 'should destroy order' do

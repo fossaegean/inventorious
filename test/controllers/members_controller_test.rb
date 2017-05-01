@@ -1,13 +1,11 @@
 require 'test_helper'
 
 class MembersControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @member = members(:one)
-  end
+  include Devise::Test::IntegrationHelpers
 
-  test 'should get index' do
-    get members_url
-    assert_response :success
+  setup do
+    sign_in users(:one)
+    @member = members(:one)
   end
 
   test 'should get new' do
@@ -20,12 +18,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
       post members_url, params: { member: { email: @member.email, name: @member.name, phone: @member.phone } }
     end
 
-    assert_redirected_to member_url(Member.last)
-  end
-
-  test 'should show member' do
-    get member_url(@member)
-    assert_response :success
+    assert_redirected_to root_url
   end
 
   test 'should get edit' do
@@ -35,7 +28,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update member' do
     patch member_url(@member), params: { member: { email: @member.email, name: @member.name, phone: @member.phone } }
-    assert_redirected_to member_url(@member)
+    assert_redirected_to root_url
   end
 
   test 'should destroy member' do
@@ -43,6 +36,6 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
       delete member_url(@member)
     end
 
-    assert_redirected_to members_url
+    assert_redirected_to root_url
   end
 end

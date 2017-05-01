@@ -1,3 +1,6 @@
+[![Build Status](https://img.shields.io/travis/fossaegean/inventorious/master.svg?label=master)](https://travis-ci.org/fossaegean/inventorious)
+[![Build Status](https://img.shields.io/travis/fossaegean/inventorious/production.svg?label=production)](https://travis-ci.org/fossaegean/inventorious/branches)
+
 # Inventorious
 
 An inventory management and tracking system built with Ruby on Rails 5.

@@ -1,6 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   name: MyString
   category: MyString
   quantity: 20
@@ -8,6 +9,7 @@ one:
   description: MyText
 
 two:
+  id: 2
   name: MyString
   category: MyString
   quantity: 10

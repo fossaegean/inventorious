@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   quantity: 5
   expire_at: 2017-03-25
-  item_id: <%= Item.first.id %>
-  member_id: <%= Member.first.id %>
+  item_id: 1
+  member_id: 1
 
 two:
+  id: 2
   quantity: 10
   expire_at: 2017-03-25

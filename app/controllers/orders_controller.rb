@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.status ||= true
 
-    unless @order.item.remaining_quantity < @order.quantity
+    if @order.item.remaining_quantity < @order.quantity
       redirect_to :back, alert: 'The quantity you entered is not currently available'
       return
     end

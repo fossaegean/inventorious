@@ -6,7 +6,6 @@ class OrderMailerTest < ActionMailer::TestCase
       subject     = 'test subject'
       mail_locals = { order: orders(:one), user: users(:one) }
 
-
       mail = OrderMailer.send_notification(mail_locals: mail_locals,
                                            action:      :create,
                                            subject:     subject)

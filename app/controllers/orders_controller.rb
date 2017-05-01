@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
   end
 
   def disable
-    Order.disable(@order.id) && @order.item.increment!(:remaining_quantity, @order.quantity.to_i)
+    Order.disable(@order.id) && @order.item.increment!(:remaining_quantity, @order.quantity)
 
     redirect_to :root, notice: 'Item marked as returned. Thank you!'
 
@@ -35,19 +35,20 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order        = Order.new(order_params)
+    @order = Order.new(order_params)
     @order.status ||= true
 
-    if @order.item.remaining_quantity >= @order.quantity
-      if @order.save && @order.item.decrement!(:remaining_quantity, @order.quantity)
-        redirect_to :root, notice: 'Order was successfully created.'
-
-        send_notification_email_for_action(:create)
-      else
-        render :new
-      end
-    else
+    unless @order.item.remaining_quantity < @order.quantity
       redirect_to :back, alert: 'The quantity you entered is not currently available'
+      return
+    end
+
+    if @order.save && @order.item.decrement!(:remaining_quantity, @order.quantity)
+      redirect_to :root, notice: 'Order was successfully created.'
+
+      send_notification_email_for_action(:create)
+    else
+      render :new
     end
   end
 

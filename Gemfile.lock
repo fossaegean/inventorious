@@ -52,6 +52,7 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.3)
     byebug (9.0.6)
+    climate_control (0.1.0)
     codeclimate-engine-rb (0.4.0)
       virtus (~> 1.0)
     coercible (1.0.0)
@@ -220,6 +221,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
   byebug
+  climate_control
   coffee-rails (~> 4.2)
   delayed_job
   delayed_job_active_record

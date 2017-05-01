@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class ItemsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    sign_in users(:one)
     @item = items(:one)
   end
 
@@ -20,12 +23,7 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
       post items_url, params: { item: { category: @item.category, description: @item.description, name: @item.name, quantity: @item.quantity } }
     end
 
-    assert_redirected_to item_url(Item.last)
-  end
-
-  test 'should show item' do
-    get item_url(@item)
-    assert_response :success
+    assert_redirected_to root_url
   end
 
   test 'should get edit' do
@@ -35,7 +33,7 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update item' do
     patch item_url(@item), params: { item: { category: @item.category, description: @item.description, name: @item.name, quantity: @item.quantity } }
-    assert_redirected_to item_url(@item)
+    assert_redirected_to root_url
   end
 
   test 'should destroy item' do

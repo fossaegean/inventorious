@@ -1,10 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user
 
-  def new
-    @user = User.new
-  end
-
   def edit
   end
 
@@ -35,7 +31,7 @@ class UsersController < ApplicationController
   end
 
   def user_update_strategy
-    if params[:user].values_at(:password, :password_confirmation).all(&:blank?)
+    if params[:user].values_at(:password, :password_confirmation).try(:all, &:blank?)
       :update_without_password
     else
       :update

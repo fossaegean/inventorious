@@ -36,6 +36,10 @@ group :development do
   gem 'reek', require: false
 end
 
+group :test do
+  gem 'climate_control'
+end
+
 group :production do
   gem 'rails_12factor'
   gem 'pg'

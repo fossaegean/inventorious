@@ -3,11 +3,13 @@
 one:
   name: MyString
   category: MyString
-  quantity: 1
+  quantity: 20
+  remaining_quantity: 5
   description: MyText
 
 two:
   name: MyString
   category: MyString
-  quantity: 1
+  quantity: 10
+  remaining_quantity: 10
   description: MyText

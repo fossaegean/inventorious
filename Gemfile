@@ -3,10 +3,9 @@ source 'https://rubygems.org'
 ruby '2.4.1'
 
 git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
-
 
 gem 'rails', '~> 5.0.2'
 gem 'puma', '~> 3.0'
@@ -31,6 +30,14 @@ group :development do
   gem 'figaro'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  # Developer happiness
+  gem 'rubocop-rails', require: false
+  gem 'reek', require: false
+end
+
+group :test do
+  gem 'climate_control'
 end
 
 group :production do

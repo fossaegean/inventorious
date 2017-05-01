@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  quantity: MyString
+  id: 1
+  quantity: 5
   expire_at: 2017-03-25
-  references: 
+  item_id: 1
+  member_id: 1
 
 two:
-  quantity: MyString
+  id: 2
+  quantity: 10
   expire_at: 2017-03-25
-  references: 

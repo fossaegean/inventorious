@@ -1,19 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user
 
-  def new
-    @user = User.new
-  end
-
   def edit
   end
 
   def update
-    if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
-      params[:user].delete(:password)
-      params[:user].delete(:password_confirmation)
-    end
-    if @user.update(user_params)
+    if @user.send(user_update_strategy, user_params)
       redirect_to :root, notice: 'User was successfully updated.'
     else
       render :edit
@@ -25,12 +17,24 @@ class UsersController < ApplicationController
     redirect_to users_url, notice: 'User was successfully destroyed.'
   end
 
+  #######
   private
-    def set_user
-      @user = User.find_by_id(current_user)
-    end
+  #######
 
-    def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  # TODO: Refactor
+  def set_user
+    @user = User.find_by_id(current_user)
+  end
+
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def user_update_strategy
+    if params[:user].values_at(:password, :password_confirmation).try(:all, &:blank?)
+      :update_without_password
+    else
+      :update
     end
+  end
 end

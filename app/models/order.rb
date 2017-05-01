@@ -7,25 +7,41 @@ class Order < ApplicationRecord
   validates :item_id, presence: true
   validates :member_id, presence: true
 
-  def self.active?
-    Order.where(status: true)
+  scope :active, -> { where(status: true) }
+  scope :inactive, -> { where(status: false) }
+  scope :expired, -> { where('expire_at < ?', Date.today) }
+
+  def self.renew(id)
+    order = Order.where(id: id)
+    order.update(expire_at: 7.days.from_now)
   end
 
-  def self.inactive?
-    Order.where(status: false)
+  def self.disable(id)
+    order = Order.where(id: id)
+    order.update(status: false)
   end
 
-  def self.expired?
-    Order.where("expire_at < ?", Date.today).where(status: true)
+  def notification_for_action(action:, who_did_this:)
+    send("notification_for_order_#{action}_from_username", who_did_this)
   end
 
-  def self.renew id
-    @order = Order.where(id: id)
-    @order.update(expire_at: 7.days.from_now)
+  #######
+  private
+  #######
+
+  def notification_for_order_create_from_username(username)
+    "#{self.member.name} borrowed #{self.quantity} x #{self.item.name} from #{username}"
   end
 
-  def self.disable id
-    @order = Order.where(id: id)
-    @order.update(status: false)
+  def notification_for_order_renew_from_username(username)
+    "An item borrowed by #{self.member.name} has been renewed for 7 days from #{username}"
+  end
+
+  def notification_for_order_return_from_username(username)
+    "#{pluralize(self.quantity, 'item')} borrowed by #{self.member.name} have been marked as returned from #{username}"
+  end
+
+  def notification_for_order_cancel_from_username(username)
+    "An self regarding #{pluralize(self.quantity, 'item')} borrowed by #{self.member.name} has been canceled from #{username}"
   end
 end

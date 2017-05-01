@@ -2,7 +2,6 @@
   <div class="wrapper">
     <%= render 'layouts/header' %>
     <div class="content-wrapper">
-
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
@@ -43,17 +42,17 @@
                   </thead>
                   <tbody>
                     <% @items.each do |item| %>
-                    <tr>
-                      <td><%= item.id %></td>
-                      <td><%= item.category %></td>
-                      <td><%= item.name %></td>
-                      <td><%= item.description %></td>
-                      <td><%= item.quantity %></td>
-                      <td><%= item.remaining_quantity %></td>
-                      <td><%= link_to 'Edit', edit_item_path(item) %></td>
-                      <td><%= link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure you want to delete this item?' } %></td>
-                      <td><%= link_to 'Borrow', new_order_path(item: item.id) %></td>
-                    </tr>
+                      <tr>
+                        <td><%= item.id %></td>
+                        <td><%= item.category %></td>
+                        <td><%= item.name %></td>
+                        <td><%= item.description %></td>
+                        <td><%= item.quantity %></td>
+                        <td><%= item.remaining_quantity %></td>
+                        <td><%= link_to 'Edit', edit_item_path(item) %></td>
+                        <td><%= link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure you want to delete this item?' } %></td>
+                        <td><%= link_to 'Borrow', new_order_path(item: item.id) %></td>
+                      </tr>
                     <% end %>
                   </tbody>
                 </table>

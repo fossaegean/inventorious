@@ -1,10 +1,6 @@
 class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @members = Member.all
-  end
-
   def new
     @member = Member.new
   end
@@ -39,12 +35,15 @@ class MembersController < ApplicationController
     end
   end
 
+  #######
   private
-    def set_member
-      @member = Member.find(params[:id])
-    end
+  #######
 
-    def member_params
-      params.require(:member).permit(:name, :email, :phone)
-    end
+  def set_member
+    @member = Member.find(params[:id])
+  end
+
+  def member_params
+    params.require(:member).permit(:name, :email, :phone)
+  end
 end

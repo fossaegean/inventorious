@@ -38,6 +38,11 @@
 
                 <div class="box-body">
                   <div class="form-group">
+                    <label>Item</label>
+                    <%= f.select(:item_id, options_from_collection_for_select(Item.all, 'id', 'name', params[:item]), { include_blank: true }, { :class => 'form-control', required: true }) %>
+                  </div>
+
+                  <div class="form-group">
                     <label>Quantity</label>
                     <%= f.number_field :quantity, class: 'form-control', placeholder: 'Enter Quantity', required: true %>
                   </div>
@@ -49,7 +54,6 @@
                     <label>Member</label>
                     <%= f.select(:member_id, options_from_collection_for_select(@member, 'id', 'name'), { include_blank: true }, { class: 'form-control', required: true }) %>
                   </div>
-                  <%= f.number_field :item_id, :value => params[:item], :hidden => true %>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">

@@ -1,13 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   name: MyString
   category: MyString
-  quantity: 1
+  quantity: 20
+  remaining_quantity: 5
   description: MyText
 
 two:
+  id: 2
   name: MyString
   category: MyString
-  quantity: 1
+  quantity: 10
+  remaining_quantity: 10
   description: MyText

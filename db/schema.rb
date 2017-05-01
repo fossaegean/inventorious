@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170423144447) do
+ActiveRecord::Schema.define(version: 20170430213751) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20170423144447) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string   "quantity"
+    t.integer  "quantity"
     t.boolean  "status"
     t.date     "expire_at"
     t.integer  "item_id"

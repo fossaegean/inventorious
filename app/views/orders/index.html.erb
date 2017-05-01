@@ -27,7 +27,7 @@
             <!-- small box -->
             <div class="small-box bg-aqua">
               <div class="inner">
-                <h3><%=@items.sum(:quantity)%></h3>
+                <h3><%= items.sum(:quantity) %></h3>
                 <p>Items Tracked</p>
               </div>
               <div class="icon">
@@ -40,7 +40,7 @@
             <!-- small box -->
             <div class="small-box bg-green">
               <div class="inner">
-                <h3><%=@items.sum(:remaining_quantity)%></h3>
+                <h3><%= items.sum(:remaining_quantity) %></h3>
                 <p>Items Available</p>
               </div>
               <div class="icon">
@@ -53,7 +53,7 @@
             <!-- small box -->
             <div class="small-box bg-red">
               <div class="inner">
-                <h3><%= (@items.sum(:quantity) - @items.sum(:remaining_quantity)) %></h3>
+                <h3><%= (items.sum(:quantity) - items.sum(:remaining_quantity)) %></h3>
                 <p>Items Unavailable</p>
               </div>
               <div class="icon">
@@ -66,7 +66,7 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
               <div class="inner">
-                <h3><%= @expired.count %></h3>
+                <h3><%= expired.count %></h3>
                 <p>Expired Orders</p>
               </div>
               <div class="icon">
@@ -82,7 +82,7 @@
           <div class="col-md-6">
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">Orders (<%= @active.count %>)</h3>
+                <h3 class="box-title">Orders (<%= active.count %>)</h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -105,36 +105,36 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% @active.each do |order| %>
-                    <tr>
-                      <td>
-                        <%= order.item.name %>
-                      </td>
-                      <td><%= order.quantity %></td>
-                      <% if order.expire_at.strftime("%y:%m:%d") >= Date.today.strftime("%y:%m:%d") %>
-                      <td>
-                        <%= order.expire_at %>
-                      </td>
-                    <% else %>
-                      <td style="color:red;">
-                        <%= order.expire_at %>
-                      </td>
-                      <% end %>
-                      <td>
-                        <%= order.member.name %>
-                      </td>
-                      <td>
-                        <%= link_to "", { :controller => :orders, :action => :disable, :id => order.id }, { class: "ion ion-log-in"} %>
-                      </td>
-                      <td>
-                        <%= link_to "", { :controller => :orders, :action => :renew, :id => order.id }, { class: "ion ion-loop"} %>
-                      </td>
-                      <td >
-                        <%= link_to order, method: :delete, data: { confirm: 'Are you sure? If you are trying to return an item it is recommended to use the "return" button.' } do %>
-                        <i class="ion ion-trash-b"></i>
+                    <% active.each do |order| %>
+                      <tr>
+                        <td>
+                          <%= order.item.name %>
+                        </td>
+                        <td><%= order.quantity %></td>
+                        <% if order.expire_at.strftime('%y:%m:%d') >= Date.today.strftime('%y:%m:%d') %>
+                          <td>
+                            <%= order.expire_at %>
+                          </td>
+                        <% else %>
+                          <td style="color:red;">
+                            <%= order.expire_at %>
+                          </td>
                         <% end %>
-                      </td>
-                    </tr>
+                        <td>
+                          <%= order.member.name %>
+                        </td>
+                        <td>
+                          <%= link_to '', { :controller => :orders, :action => :disable, :id => order.id }, { class: 'ion ion-log-in' } %>
+                        </td>
+                        <td>
+                          <%= link_to '', { :controller => :orders, :action => :renew, :id => order.id }, { class: 'ion ion-loop' } %>
+                        </td>
+                        <td>
+                          <%= link_to order, method: :delete, data: { confirm: 'Are you sure? If you are trying to return an item it is recommended to use the "return" button.' } do %>
+                            <i class="ion ion-trash-b"></i>
+                          <% end %>
+                        </td>
+                      </tr>
                     <% end %>
                   </tbody>
                 </table>
@@ -147,7 +147,7 @@
           <div class="col-md-6">
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">Members (<%= @members.count %>)</h3>
+                <h3 class="box-title">Members (<%= members.count %>)</h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -163,18 +163,18 @@
                       <i class="ion ion-trash-b"></i>
                     </th>
                   </tr>
-                  <% @members.each do |member| %>
-                  <tr>
-                    <td><%= member.name %></td>
-                    <td><%= member.email %></td>
-                    <td><%= member.phone %></td>
-                    <td><%= link_to "", edit_member_path(member), { class: "ion ion-edit"} %></td>
-                    <td>
-                      <%= link_to member, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="ion ion-trash-b"></i>
-                      <% end %>
-                    </td>
-                  </tr>
+                  <% members.each do |member| %>
+                    <tr>
+                      <td><%= member.name %></td>
+                      <td><%= member.email %></td>
+                      <td><%= member.phone %></td>
+                      <td><%= link_to '', edit_member_path(member), { class: 'ion ion-edit' } %></td>
+                      <td>
+                        <%= link_to member, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="ion ion-trash-b"></i>
+                        <% end %>
+                      </td>
+                    </tr>
                   <% end %>
                 </table>
               </div>
@@ -205,4 +205,5 @@
         });
       });
     </script>
-  </body>
+  </div>
+</body>

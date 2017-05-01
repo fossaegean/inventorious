@@ -1,94 +1,86 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :disable, :renew]
 
   def index
-    @orders = Order.all
-    @members = Member.all
-    @items = Item.all
-    @active = Order.active?
-    @expired = Order.expired?
+    render locals: { orders:  Order.all,
+                     members: Member.all,
+                     items:   Item.all,
+                     active:  Order.active.all,
+                     expired: Order.expired.all }
   end
 
   def old
-    @inactive = Order.inactive?
+    @inactive = Order.inactive.all
   end
 
   def renew
-    @current_user = current_user
-    @order = Order.find_by_id(params[:id])
-    Order.renew(params[:id])
-    redirect_to :root
-    flash[:notice] = "Renewed for 7 days from now. Enjoy!"
+    Order.renew(@order.id)
 
-    begin
-      OrderMailer.delay.renew_order(@order, @current_user).deliver
-    rescue Exception => e
-    end
+    redirect_to :root, notice: 'Renewed for 7 days from now. Enjoy!'
+
+    send_notification_email_for_action(:renew)
   end
 
   def disable
-    borrowed_qty = Order.find_by_id(params[:id]).quantity.to_i
-    @borrowed_item = Order.find_by_id(params[:id]).item
-    @borrowed_item.increment!(:remaining_quantity, borrowed_qty)
-    @current_user = current_user
-    @order = Order.find_by_id(params[:id])
-    Order.disable(params[:id])
-    redirect_to :root
-    flash[:notice] = "Item marked as returned. Thank you!"
+    Order.disable(@order.id) && @order.item.increment!(:remaining_quantity, @order.quantity.to_i)
 
-    begin
-      OrderMailer.delay.return_order(@order, @current_user).deliver
-    rescue Exception => e
-    end
+    redirect_to :root, notice: 'Item marked as returned. Thank you!'
+
+    send_notification_email_for_action(:return)
   end
 
   def new
-    @order = Order.new
+    @order  = Order.new
     @member = Member.all
   end
 
   def create
-    if Item.find_by_id(params[:order][:item_id]).remaining_quantity >= params[:order][:quantity].to_i
-      params[:order][:status] = true
-      @order = Order.new(order_params)
-      if @order.save
-        @current_user = current_user
-        @borrowed_item = Item.find_by_id(params[:order][:item_id])
-        @borrowed_item.decrement!(:remaining_quantity, params[:order][:quantity].to_i)
+    @order        = Order.new(order_params)
+    @order.status ||= true
+
+    if @order.item.remaining_quantity >= @order.quantity
+      if @order.save && @order.item.decrement!(:remaining_quantity, @order.quantity)
         redirect_to :root, notice: 'Order was successfully created.'
-        begin
-          OrderMailer.delay.create_order(@order, @current_user).deliver
-        rescue Exception => e
-        end
+
+        send_notification_email_for_action(:create)
       else
         render :new
       end
     else
-      flash[:alert] = 'The quantity you entered is not currently available'
-      redirect_to :back
+      redirect_to :back, alert: 'The quantity you entered is not currently available'
     end
   end
 
   def destroy
-    borrowed_qty = @order.quantity.to_i
-    @borrowed_item = @order.item
-    @borrowed_item.increment!(:remaining_quantity, borrowed_qty)
-    @current_user = current_user
-    @order.destroy
+    item = @order.item
+    @order.destroy && item.increment!(:remaining_quantity, @order.quantity)
 
     redirect_to orders_url, notice: 'Order was successfully destroyed.'
-    begin
-      OrderMailer.delay.cancel_order(@order, @current_user).deliver
-    rescue Exception => e
-    end
+
+    send_notification_email_for_action(:cancel)
   end
 
+  #######
   private
-    def set_order
-      @order = Order.find(params[:id])
-    end
+  #######
 
-    def order_params
-      params.require(:order).permit(:quantity, :expire_at, :status, :item_id, :member_id)
-    end
+  def set_order
+    @order = Order.find(params[:id])
+  end
+
+  def order_params
+    params.require(:order).permit(:quantity, :expire_at, :status, :item_id, :member_id)
+  end
+
+  def order_mailer_params
+    { order: @order, user: current_user }
+  end
+
+  def send_notification_email_for_action(action)
+    OrderMailer.delay.send_notification(
+        mail_locals: { order: @order, user: current_user },
+        action:      action,
+        subject:     notification_for_action(action: action, who_did_this: current_user.name)
+    ).deliver rescue nil
+  end
 end

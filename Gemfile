@@ -32,7 +32,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   # Developer happiness
-  gem 'rubocop-rails', require: false
+  gem 'rubocop', require: false
   gem 'reek', require: false
 end
 

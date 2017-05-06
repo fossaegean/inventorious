@@ -4,9 +4,8 @@ AllCops:
     - 'bin/*'
   TargetRubyVersion: 2.3
 
-inherit_gem:
-  rubocop-rails:
-    - config/rails.yml
+inherit_from:
+  - .rubocop-rails.yml
 
 Style/StringLiterals:
   EnforcedStyle: single_quotes

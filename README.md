@@ -1,5 +1,6 @@
 [![Build Status](https://img.shields.io/travis/fossaegean/inventorious/master.svg?label=master)](https://travis-ci.org/fossaegean/inventorious)
 [![Build Status](https://img.shields.io/travis/fossaegean/inventorious/production.svg?label=production)](https://travis-ci.org/fossaegean/inventorious/branches)
+[![Code Climate](https://codeclimate.com/github/fossaegean/inventorious.png)](https://codeclimate.com/github/fossaegean/inventorious)
 
 # Inventorious
 
